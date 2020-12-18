@@ -1,7 +1,9 @@
 # Generic benchmarks with on-disk maps
 
-Benchmarks in this paragraphs are to test basic features of MapDB (or, later, of ChronicleMap) and using
-data of basic types (int, strings).
+Benchmarks in this paragraphs are to test basic features of MapDB (or, later, of ChronicleMap or other similar on-disk 
+implementations of Map and collections) and using data of basic types (int, strings).  
+
+Some notes on how to arrange a first Maven project are reported.
 
 ## Map of strings
 * Create MapDB of <String, String> (let's call it `data`), populate it with datasetSize random entries, 
@@ -24,20 +26,23 @@ data of basic types (int, strings).
 * Use the same MapDB at the previous point, with integer keys
 * Run this for nTests times:
   * Generate a random number between 0 and (`initialDatasetSize * 2 - 1`) (ie, non-existing key half the 
-	times)
+    times)
   * Check if they corresponding key exists
   * If yes, consume it
-* At the end, report the total times taken to check the existence of keys and, for the keys that exist, the total time for doing everything (test they exist + retrieval)
+* At the end, report the total times taken to check the existence of keys and, for the keys that exist, the total time 
+  for doing everything (test they exist + retrieval)
 * Note that the point of this test is to see how MapDB performs when requests are not concentrated on a 
-  particular pool of data entries, which is the condition allowing for caching subsets of disk data in memory. In other words, we'd like to see if it performs well when the kind of application access to the data doesn't allow for taking advantage from caching techniques.
+  particular pool of data entries, which is the condition allowing for caching subsets of disk data in memory. In other 
+  words, we'd like to see if it performs well when the kind of application access to the data doesn't allow for taking 
+  advantage from caching techniques.
 
 ## Data modification benchmark
 * Use the map wit integer keys
 * keep track of the `maxKey` used for the keys with a variable (initially it will be == `data.size() - 1`)
 * Repeat for nTests times:
   * generate a random value operation picking randomly one of: `OP_DEL = 0`, `OP_MOD = 1`, `OP_ADD = 2`
-	(with this, I mean use integers, but use named variables rather than straight numbers, later refine it 
-	with Java enums)
+	  (with this, I mean use integers, but use named variables rather than straight numbers, later refine it 
+	  with Java enums)
   * If `OP_DEL` or `OP_MOD`:
     * generate a random from 0 to `maxKey`
     * if the key doesn't exist (cause it was deleted), skip the steps below and repeat from the loop's begin
@@ -104,9 +109,9 @@ benchmark.runAll();
 
 ## Other tips.
 * [This][10] is how the timing of a method or instruction can be done 
-in Java. However, **try not to do it this way**. It's easy with [XStopWatch][20], which is an extension of
-[StopWatch][30]. Both can be used in similar ways, it just has a couple of additional methods to ease
-typical tasks.
+  in Java. However, **try not to do it this way**. It's easy with [XStopWatch][20], which is an extension of
+  [StopWatch][30]. Both can be used in similar ways, it just has a couple of additional methods to ease
+  typical tasks.
 
 [10]: https://stackoverflow.com/a/180179/529286
 [20]: https://github.com/marco-brandizi/jutils/blob/master/jutils/src/main/java/uk/ac/ebi/utils/time/XStopWatch.java
