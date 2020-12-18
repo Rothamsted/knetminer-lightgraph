@@ -1,5 +1,9 @@
 # Ondex typical use cases
 
+This is a collection of typical ways in which the Knetbuilder (aka Ondex) interfaces (`ONDEXGraph`, `ONDEXConcept`, 
+`Relation`, etc) are used in knetminer. We plan to test more [generic cases](MapBenchmarks.md) before the ones in this 
+document.
+
 * Store/get an attribute
 * Same for ConceptClass, RelationType
 	* Many maps are BidiMap
