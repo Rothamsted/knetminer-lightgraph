@@ -1,0 +1,9 @@
+# This is to make git ignore local files (https://www.pluralsight.com/guides/how-to-use-gitignore-file)
+
+# Eclipse metadata
+/.classpath
+/.settings
+/.project
+
+# Temp files built by Maven
+/target
