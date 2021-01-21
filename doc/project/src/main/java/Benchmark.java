@@ -19,7 +19,7 @@ abstract class Benchmark {
 	abstract long printReport();
 	
 	public void runBenchmark() {
-		
+		//TODO
 		
 	}
 	
@@ -44,11 +44,11 @@ abstract class Benchmark {
 	}
 	
 //	class RetrievalBenchmark extends Benchmark {
-//		
+//		TODO
 //	}
 	
 //	class ExistenceBenchmark extends Benchmarks {
-//		
+//		TODO
 //	}
 	
 	public static void main(String[] args) {
@@ -62,16 +62,8 @@ abstract class Benchmark {
 				.counterEnable()
 				.createOrOpen();
 		
-//	    for (Map.Entry<String,String> entry : data1.entrySet()) {
-//	    	String k = entry.getKey();
-//	    	String v = entry.getValue();
-//	    	data.put(k, v);
-//	    }
-		
-//		System.out.println(data);
-		
 		Benchmark benchmark = new StringsPopulationBenchmark();
-		benchmark.runBenchmark();
+		benchmark.runBenchmark(); //to complete the runBenchmark() abstract method
 		data.close();
 
 	}
