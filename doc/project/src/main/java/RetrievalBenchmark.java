@@ -23,12 +23,12 @@ public class RetrievalBenchmark {
 		
 		long timeElapsed = 0;
 		
-		for (int i=0; i<2000; i++) {
+		for (int i=0; i<10000; i++) {
 			int minLen = 3;
 			int maxLen = 7;
 			String generatedString = RandomStringUtils.randomAlphanumeric(minLen, maxLen);
-			int index = data.size();
-			long start = System.currentTimeMillis();
+			int index = data.size();                 //string keys as well (seen in Ondex) -> to check for the low 
+			long start = System.currentTimeMillis(); //chance of the string key already exists in the map
 			data.put(index, generatedString);
 			long finish = System.currentTimeMillis();
 			timeElapsed = timeElapsed + (finish - start);

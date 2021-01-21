@@ -24,7 +24,7 @@ public class StringsPopulationBenchmark {
 			int minLen = 3;
 			int maxLen = 7;
 			String generatedString = RandomStringUtils.randomAlphanumeric(minLen, maxLen);
-			String itoString = ("" + i);
+			String itoString = ("" + i); //generatedKey as well 
 			data.put(itoString, generatedString);
 		}
 		
