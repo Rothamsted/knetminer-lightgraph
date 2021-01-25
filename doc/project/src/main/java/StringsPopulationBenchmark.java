@@ -4,15 +4,12 @@ import org.mapdb.DBMaker;
 import org.mapdb.HTreeMap;
 import org.mapdb.Serializer;
 
-public class StringsPopulationBenchmark {
-
+public class StringsPopulationBenchmark extends Benchmark {
+	
 	public static void main(String[] args) {
-		
-		long start = System.currentTimeMillis();
 		
 		DB db = DBMaker
 				.fileDB("file.db")
-				.fileDeleteAfterClose()
 				.make();
 		
 		HTreeMap<String, String> data = db
@@ -20,23 +17,36 @@ public class StringsPopulationBenchmark {
 				.counterEnable()
 				.createOrOpen();
 		
+		long timeElapsed = 0;
+		
 		for (int i=0; i<5; i++) {
 			int minLen = 3;
 			int maxLen = 7;
-			String generatedString = RandomStringUtils.randomAlphanumeric(minLen, maxLen);
-			String itoString = ("" + i); //generatedKey as well 
-			data.put(itoString, generatedString);
+			long start = System.currentTimeMillis();
+			String generatedKey = RandomStringUtils.randomAlphanumeric(minLen, maxLen);
+			String generatedValue = RandomStringUtils.randomAlphanumeric(minLen, maxLen);
+			data.put(generatedKey, generatedValue);
+			long finish = System.currentTimeMillis();
+			timeElapsed = timeElapsed + (finish - start);
 		}
-		
-	    
-	    long finish = System.currentTimeMillis();
-	    long timeElapsed = finish - start;
-	    
+	   
 	    System.out.println("Took : " + timeElapsed + "ms");
 	    
 		db.commit();
 		db.close();
 
+	}	
+
+	@Override
+	void createData() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void printReport() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
