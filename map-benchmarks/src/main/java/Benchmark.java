@@ -42,9 +42,13 @@ public abstract class Benchmark {
 	
 	abstract void printReport();
 	
-	public void init() {
+	public void init() 
+	{
+		// TODO: this should be based on a configuration parameter and it's better to put the default
+		// in target/ cause this is where Maven sends the generated disposable files (mvn clean deletes such
+		// dir).
 		DB db = DBMaker
-				.fileDB("file.db")
+				.fileDB("target/file.db")
 				.fileDeleteAfterClose()
 				.make();
 		

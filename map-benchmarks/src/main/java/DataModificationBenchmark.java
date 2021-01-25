@@ -45,7 +45,7 @@ public class DataModificationBenchmark {
 				nTest = nTest + 1;
 			} else if (randomNum == 1) {
 				//modify
-				Map.Entry<String,String> entry : data.entrySet();
+				Map.Entry<String,String> entry = data.entrySet();
 			   	String k = entry.getKey();
 			   	String k2= keys.get(0);
 			   	String v = entry.getValue();
