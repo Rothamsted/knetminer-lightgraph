@@ -42,7 +42,7 @@ public abstract class Benchmark {
 	
 	abstract void printReport();
 	
-	public static void init() {
+	public void init() {
 		DB db = DBMaker
 				.fileDB("file.db")
 				.fileDeleteAfterClose()
