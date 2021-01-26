@@ -32,8 +32,8 @@ public abstract class Benchmark {
 	private long finish;
 	// TODO: Likely, timeElapsed is specific of the subclasses that need it, some of them will need to report different
 	// total times, eg, 'Data modification benchmark' 
-	private long timeElapsed;
-	private HTreeMap<String,String> data;
+	protected long timeElapsed;
+	protected HTreeMap<Integer,String> data;
 	
 	abstract void createData(); ///Don't believe this is needed in all benchmarks (only needed in StringPop)
 	
@@ -52,8 +52,8 @@ public abstract class Benchmark {
 				.fileDeleteAfterClose()
 				.make();
 		
-		HTreeMap<String,String> data = db
-				.hashMap("data", Serializer.STRING, Serializer.STRING)
+		data = db
+				.hashMap("data", Serializer.INTEGER, Serializer.STRING)
 				.counterEnable()
 				.createOrOpen();
 	}
