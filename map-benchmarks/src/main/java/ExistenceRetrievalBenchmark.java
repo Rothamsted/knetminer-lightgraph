@@ -61,7 +61,16 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
     		System.out.println(randomNum + " isn't a valid key in the map");
     	}	    
     	
-    	// TODO
+    	// TODO: start/finish updates should be strictly close to the instructions to be benchmarked
+    	// So, this cannot work, cause you're clocking the time to print too (which is irrelevant)
+    	// Moreover, we want to count two separate elapsed times: the time needed for containsKey()
+    	// and the time needed for data.get().
+    	// This means you've to use the start/finish trick twice and both times update two different 
+    	// total counters (let's say existenceTime, fetchTime.
+    	// 
+    	// Also, report all in printReport(): existence, fetch, total (existence+fetch), averages of all 3
+    	// (ie, all divided by consumedItems).
+    	
     	long finish = System.currentTimeMillis();
     	timeElapsed = timeElapsed + (finish - start);
     	consumedValues = consumedValues + 1;
