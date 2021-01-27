@@ -42,7 +42,7 @@ public abstract class Benchmark {
 	/**
 	 * TODO: Sorry I had proposed this in a rather wrong way.
 	 * 
-	 * I imaging runBenchMark() as the place where specific tests are run (and benchmarked/clocked) after
+	 * Initially I was imagining runBenchMark() as the place where specific tests are run (and benchmarked/clocked) after
 	 * data creation/population/etc. Both this and createData() can be empty (if they don't need to do anything 
 	 * in a specific case).
 	 * 
