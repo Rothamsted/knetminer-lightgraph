@@ -54,9 +54,12 @@ public abstract class Benchmark {
 	}
 	
 	// TODO: it might be useful to have these public. Review the visibility rules in Java
+	// an then review the methods without any visibility modifier (ie, being 'package' visible)
 	public abstract void printReport();
 
-	
+	/**
+	 * Runs everything in one go.
+	 */
 	public void runAll () {
 		init();
 		createData();
