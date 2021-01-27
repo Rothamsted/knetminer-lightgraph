@@ -6,16 +6,6 @@ import org.mapdb.Serializer;
 
 public class StringsPopulationBenchmark extends Benchmark {
 	
-	public void main(String[] args) {
-		
-		init();
-	
-		createData();
-	    
-		printReport();
-
-	}	
-
 	void createData() {
 		for (int i=0; i<10; i++) {
 			int minLen = 3;

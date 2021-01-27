@@ -1,8 +1,4 @@
 
-import java.util.ArrayList;
-import java.util.Map;
-
-import org.apache.commons.lang3.RandomStringUtils;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.HTreeMap;
@@ -25,20 +21,13 @@ import org.mapdb.Serializer;
 public abstract class Benchmark {
 	
 	// TODO: these are needed inside a loop, so, very local, they shouldn't be class fields
-	// printReport doesn't need to do the calculations, createData() or runBenchmark() can do that in advance
-	// and save the result in timeElapsed
 	// Moreover, consider the more expressive StopWatch: https://www.oreilly.com/library/view/jakarta-commons-cookbook/059600706X/ch01s20.html 
 	private long start;
 	private long finish;
-	// TODO: Likely, timeElapsed is specific of the subclasses that need it, some of them will need to report different
-	// total times, eg, 'Data modification benchmark' 
 	protected long timeElapsed;
 	protected HTreeMap<Integer,String> data;
 	
-	abstract void createData(); ///Don't believe this is needed in all benchmarks (only needed in StringPop)
-	
-	// TODO: in general, I don't expect this to return a result. It's supposed to print something, maybe it would
-	// make sense to return something like a string, but for the moment I'd go with void
+	abstract void createData();
 	
 	abstract void printReport();
 	
@@ -59,7 +48,9 @@ public abstract class Benchmark {
 	}
 	
 	public void runBenchmark() {
-		//TODO
+		init();
+		createData();
+		printReport();
 	}
 	
 	
