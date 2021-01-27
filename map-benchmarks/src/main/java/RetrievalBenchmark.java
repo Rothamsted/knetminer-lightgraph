@@ -12,7 +12,7 @@ public class RetrievalBenchmark extends Benchmark{
 		
 		timeElapsed = 0;
 		
-		for (int i=0; i<10; i++) {
+		for (int i=0; i<2000; i++) {
 			int minLen = 3;
 			int maxLen = 7;
 			int index = data.size();

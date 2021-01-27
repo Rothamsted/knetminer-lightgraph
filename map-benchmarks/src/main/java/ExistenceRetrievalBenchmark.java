@@ -12,7 +12,7 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 	
 	void createData() {
 		timeElapsed = 0;
-		for (int i=0; i<10; i++) {
+		for (int i=0; i<100000; i++) {
 			int minLen = 3;
 			int maxLen = 7;
 			int index = data.size();
@@ -27,7 +27,11 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 	    	String v = entry.getValue();
 	    	map.put(k, v);    	
 	    }
-	    
+	}
+
+	void printReport() {
+		System.out.println("--- Existence & Retrieval ---");
+		
 	    while (consumedValues != 3) {
 	    	long start = System.currentTimeMillis();
 	    	int randomNum = ThreadLocalRandom.current().nextInt(0, data.size() + 1);
@@ -43,10 +47,7 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 	    	timeElapsed = timeElapsed + (finish - start);
 	    	consumedValues = consumedValues + 1;
 	    }
-	}
-
-	void printReport() {
-		System.out.println("--- Existence & Retrieval ---");
+		
 		System.out.println("Amount of keys/values in map: " + data.size());
 		System.out.println("Amount of times checked for a valid key: " + consumedValues);
 		System.out.println("Took : " + timeElapsed + "ms");

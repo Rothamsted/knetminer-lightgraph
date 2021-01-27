@@ -3,7 +3,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 public class StringsPopulationBenchmark extends Benchmark {
 	
 	void createData() {
-		for (int i=0; i<10; i++) {
+		for (int i=0; i<100000; i++) {
 			int minLen = 3;
 			int maxLen = 7;
 			long start = System.currentTimeMillis();
