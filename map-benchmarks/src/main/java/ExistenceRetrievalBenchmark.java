@@ -41,17 +41,16 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 	    		System.out.println("The value related to this key is: " + data.get(randomNum));
 	    	} else {
 	    		System.out.println(randomNum + " isn't a valid key in the map");
-	    	}
+	    	}	    
 	    	
 	    	long finish = System.currentTimeMillis();
 	    	timeElapsed = timeElapsed + (finish - start);
 	    	consumedValues = consumedValues + 1;
-	    }
-		
+	    }		
+	    
 		System.out.println("Amount of keys/values in map: " + data.size());
 		System.out.println("Amount of times checked for a valid key: " + consumedValues);
-		System.out.println("Took : " + timeElapsed + "ms");
-		
+		System.out.println("Took : " + timeElapsed + "ms");		
 	}
 	
 	
