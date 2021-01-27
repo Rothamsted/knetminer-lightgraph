@@ -1,8 +1,4 @@
 import org.apache.commons.lang3.RandomStringUtils;
-import org.mapdb.DB;
-import org.mapdb.DBMaker;
-import org.mapdb.HTreeMap;
-import org.mapdb.Serializer;
 
 public class StringsPopulationBenchmark extends Benchmark {
 	
@@ -20,6 +16,8 @@ public class StringsPopulationBenchmark extends Benchmark {
 	}
 
 	void printReport() {
+		System.out.println("--- String Population ---");
+		System.out.println("Amount of values populated: " + data.size());
 		System.out.println("Took : " + timeElapsed + "ms");
 	}
 

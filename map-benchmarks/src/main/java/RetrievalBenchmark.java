@@ -1,44 +1,41 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
-import org.mapdb.DB;
-import org.mapdb.DBMaker;
-import org.mapdb.HTreeMap;
-import org.mapdb.Serializer;
+import org.apache.commons.lang3.RandomStringUtils;
 
-public class RetrievalBenchmark {
+public class RetrievalBenchmark extends Benchmark{
 
-	public static void main(String[] args) {
+	private Map<Integer,String> map;
+
+	void createData() {
 		
-		DB db = DBMaker
-				.fileDB("file.db")
-				.make();	
+		timeElapsed = 0;
 		
-		HTreeMap<String, String> data = db
-				.hashMap("data", Serializer.STRING, Serializer.STRING)
-				.counterEnable()
-				.createOrOpen();
+		for (int i=0; i<10; i++) {
+			int minLen = 3;
+			int maxLen = 7;
+			int index = data.size();
+			String generatedValue = RandomStringUtils.randomAlphanumeric(minLen, maxLen);
+			data.put(index, generatedValue);
+		}
 		
-		long timeElapsed = 0;
+		map = new HashMap<Integer,String>();
 		
-		Map<String,String> map = new HashMap<String,String>();
-		
-	    for (Map.Entry<String,String> entry : data.entrySet()) { //can't use the entry way because can't search for specific pos
+	    for (Entry<Integer, String> entry : data.entrySet()) {
 	    	long start = System.currentTimeMillis();
-	    	String k = entry.getKey();
+	    	Integer k = entry.getKey();
 	    	String v = entry.getValue();
 	    	map.put(k, v);
 	    	long finish = System.currentTimeMillis();
 	    	timeElapsed = timeElapsed + (finish - start);	    	
 	    }
-	    
-		System.out.println(map);
-		
-	    System.out.println("Took : " + timeElapsed + "ms");
-	   
-		db.commit();
-		db.close();
+	}
 
+	void printReport() {
+		System.out.println("--- Retrieval ---");
+		System.out.println(map);
+		System.out.println("Took : " + timeElapsed + "ms");
 	}
 
 }
