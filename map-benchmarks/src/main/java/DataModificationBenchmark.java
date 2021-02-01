@@ -70,8 +70,7 @@ public class DataModificationBenchmark extends Benchmark{
 		    	timeElapsed = timeElapsed + (finish - start);	    	
 		    }
 		    
-		    System.out.println(map);		
-		    
+		    System.out.println(map);	
 		}		
 		
 		System.out.println("Took : " + timeElapsed + "ms");	
