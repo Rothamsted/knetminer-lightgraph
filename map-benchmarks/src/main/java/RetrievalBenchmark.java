@@ -8,7 +8,7 @@ public class RetrievalBenchmark extends Benchmark{
 
 	private Map<Integer,String> map;
 
-	void createData() {
+	public void createData() {
 		
 		timeElapsed = 0;
 		
@@ -32,7 +32,7 @@ public class RetrievalBenchmark extends Benchmark{
 	    }
 	}
 
-	void printReport() {
+	public void printReport() {
 		System.out.println("--- Retrieval ---");
 		System.out.println(map);
 		System.out.println("Took : " + timeElapsed + "ms");
