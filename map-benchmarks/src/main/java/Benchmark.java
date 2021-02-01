@@ -20,7 +20,11 @@ public abstract class Benchmark {
 	protected long timeElapsed;
 	protected HTreeMap<Integer,String> data;
 	
-	// I've re-ordered the methods just to reflect the order in runAll()
+	abstract void createData();
+	
+	abstract void printReport();
+	
+	abstract void runBenchmark();
 	
 	public void init() 
 	{
@@ -33,9 +37,6 @@ public abstract class Benchmark {
 				.hashMap("data", Serializer.INTEGER, Serializer.STRING)
 				.counterEnable()
 				.createOrOpen();
-	}	
-	
-	public void createData() {
 	}
 		
 	
@@ -50,12 +51,11 @@ public abstract class Benchmark {
 	 * Sorry for the confusion on this!
 	 * 
 	 */
-	public void runBenchmark() {
-	}
+
 	
 	// TODO: it might be useful to have these public. Review the visibility rules in Java
 	// an then review the methods without any visibility modifier (ie, being 'package' visible)
-	public abstract void printReport();
+
 
 	/**
 	 * Runs everything in one go.

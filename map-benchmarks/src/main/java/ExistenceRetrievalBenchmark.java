@@ -13,7 +13,7 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 	public void createData()
 	{
 		timeElapsed = 0;
-		for (int i=0; i<100000; i++) {
+		for (int i=0; i<10; i++) {
 			int minLen = 3;
 			int maxLen = 7;
 			int index = data.size();
@@ -28,12 +28,11 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 		
 		map = new HashMap<Integer,String>();
 
-		// TODO: I re-indendented correctly, Eclipse has a function for that (Source/Format or 'Format Element')
-    for (Entry<Integer, String> entry : data.entrySet()) {
-    	Integer k = entry.getKey();
-    	String v = entry.getValue();
-    	map.put(k, v);    	
-    }
+		for (Entry<Integer, String> entry : data.entrySet()) {
+			Integer k = entry.getKey();
+			String v = entry.getValue();
+			map.put(k, v);    	
+		}
 	}
 	
 	@Override
@@ -42,9 +41,9 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 		// TODO: I moved this code here, as described on the changes made on Benchmark
 		// TODO: this 3 needs to eventually become a configuration parameter   
 		
-    while (consumedValues != 3) {
-    	long start = System.currentTimeMillis();
-    	int randomNum = ThreadLocalRandom.current().nextInt(0, data.size() + 1);
+		while (consumedValues != 3) {
+    		long start = System.currentTimeMillis();
+    		int randomNum = ThreadLocalRandom.current().nextInt(0, data.size() + 1);
     	
     	// TODO: when testing with millions of entries you won't be able to afford that much output
     	// One way to fix this is to remove all the println() command, leaving data.get() only
@@ -54,12 +53,12 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
     	// https://www.java67.com/2015/10/how-to-solve-fizzbuzz-in-java.html
     	// (you're going to have only one if in this case, checking if consumedValue is 1000, 2000, etc) 
     	// 
-    	if (map.containsKey(randomNum)) {
-    		System.out.println("The key of '" + randomNum + "' exists in the map");
-    		System.out.println("The value related to this key is: " + data.get(randomNum));
-    	} else {
-    		System.out.println(randomNum + " isn't a valid key in the map");
-    	}	    
+    		if (map.containsKey(randomNum)) {
+    			System.out.println("The key of '" + randomNum + "' exists in the map");
+    			System.out.println("The value related to this key is: " + data.get(randomNum));
+    		} else {
+    			System.out.println(randomNum + " isn't a valid key in the map");
+    		}	    
     	
     	// TODO: start/finish updates should be strictly close to the instructions to be benchmarked
     	// So, this cannot work, cause you're clocking the time to print too (which is irrelevant)
@@ -71,10 +70,10 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
     	// Also, report all in printReport(): existence, fetch, total (existence+fetch), averages of all 3
     	// (ie, all divided by consumedItems).
     	
-    	long finish = System.currentTimeMillis();
-    	timeElapsed = timeElapsed + (finish - start);
-    	consumedValues = consumedValues + 1;
-    }		
+    		long finish = System.currentTimeMillis();
+    		timeElapsed = timeElapsed + (finish - start);
+    		consumedValues = consumedValues + 1;
+    	}		
 	}
 
 

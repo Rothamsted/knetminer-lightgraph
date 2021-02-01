@@ -5,9 +5,11 @@ public class BenchmarkRunner {
 		Benchmark spBenchmark = new StringsPopulationBenchmark();
 		Benchmark rBenchmark = new RetrievalBenchmark();
 		Benchmark erBenchmark = new ExistenceRetrievalBenchmark();
-		spBenchmark.runBenchmark();
-		rBenchmark.runBenchmark();
-		erBenchmark.runBenchmark();
+		Benchmark dmBenchmark = new DataModificationBenchmark();
+		spBenchmark.runAll();
+		rBenchmark.runAll();
+		erBenchmark.runAll();
+		dmBenchmark.runAll();
 
 	}
 

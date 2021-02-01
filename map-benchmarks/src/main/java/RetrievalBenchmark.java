@@ -12,7 +12,7 @@ public class RetrievalBenchmark extends Benchmark{
 		
 		timeElapsed = 0;
 		
-		for (int i=0; i<2000; i++) {
+		for (int i=0; i<10; i++) {
 			int minLen = 3;
 			int maxLen = 7;
 			int index = data.size();
@@ -36,6 +36,12 @@ public class RetrievalBenchmark extends Benchmark{
 		System.out.println("--- Retrieval ---");
 		System.out.println(map);
 		System.out.println("Took : " + timeElapsed + "ms");
+	}
+
+	@Override
+	void runBenchmark() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

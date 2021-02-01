@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
-public class DataModificationBenchmark extends Benchmark{
+public class DataModificationBenchmark extends Benchmark {
 	
 	private int nTest;
 	private int randomNum;
@@ -28,7 +28,13 @@ public class DataModificationBenchmark extends Benchmark{
 
 	void printReport() {
 		System.out.println("--- Data Modification ---");
-	    
+		System.out.println(map);	
+		System.out.println("Took : " + timeElapsed + "ms");	
+		
+	}
+
+	@Override
+	void runBenchmark() {
 		randomNum = ThreadLocalRandom.current().nextInt(0, 2);
 		nTest = 0;		
 		generatedValue = "";
@@ -70,10 +76,9 @@ public class DataModificationBenchmark extends Benchmark{
 		    	timeElapsed = timeElapsed + (finish - start);	    	
 		    }
 		    
-		    System.out.println(map);	
-		}		
-		
-		System.out.println("Took : " + timeElapsed + "ms");	
+//		    System.out.println(map);
+		    
+		}
 		
 	}
 
