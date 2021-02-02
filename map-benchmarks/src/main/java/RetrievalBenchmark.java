@@ -1,47 +1,42 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
 public class RetrievalBenchmark extends Benchmark{
-
-	private Map<Integer,String> map;
+	
+	private List<String> map;
 
 	public void createData() {
 		
-		timeElapsed = 0;
-		
-		for (int i=0; i<10; i++) {
-			int minLen = 3;
-			int maxLen = 7;
+		for (int i=0; i<testSize; i++) {
 			int index = data.size();
-			String generatedValue = RandomStringUtils.randomAlphanumeric(minLen, maxLen);
+			String generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
 			data.put(index, generatedValue);
-		}
-		
-		map = new HashMap<Integer,String>();
-		
-	    for (Entry<Integer, String> entry : data.entrySet()) {
-	    	long start = System.currentTimeMillis();
-	    	Integer k = entry.getKey();
-	    	String v = entry.getValue();
-	    	map.put(k, v);
-	    	long finish = System.currentTimeMillis();
-	    	timeElapsed = timeElapsed + (finish - start);	    	
-	    }
+		}		
 	}
 
 	public void printReport() {
-		System.out.println("--- Retrieval ---");
-		System.out.println(map);
+		System.out.println("Times Retrieved: " + map.size());
 		System.out.println("Took : " + timeElapsed + "ms");
 	}
 
 	@Override
 	void runBenchmark() {
-		// TODO Auto-generated method stub
 		
+		System.out.println("--- Retrieval ---");
+		map = new ArrayList<String>();
+		
+		while (nTest < testCount) {
+			int randomKey = ThreadLocalRandom.current().nextInt(0, data.size());
+			long start = System.currentTimeMillis();
+			String retrievedValue = data.get(randomKey);
+			long finish = System.currentTimeMillis();
+			timeElapsed = timeElapsed + (finish - start);
+			map.add(retrievedValue);
+			nTest = nTest + 1;
+		}
 	}
-
 }

@@ -1,49 +1,36 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
 public class ExistenceRetrievalBenchmark extends Benchmark{
 
-	private Map<Integer,String> map;
-	private int consumedValues;
+	private long totalExistence;
+	private long totalFetch;
+	private List<String> map;
 	
-	public void createData()
-	{
-		timeElapsed = 0;
-		for (int i=0; i<10; i++) {
-			int minLen = 3;
-			int maxLen = 7;
+	public void createData() {
+		for (int i=0; i<testSize; i++) {
 			int index = data.size();
-			String generatedValue = RandomStringUtils.randomAlphanumeric(minLen, maxLen);
+			String generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
 			data.put(index, generatedValue);
-		}		
-	  
-		// TODO: initialisations should go either on a dedicated method, or, in this case, close to 
-		// the code that is about to use the thing you initialise (so, in which method should you move consumedValues?)
-		// Another option in cases like this is to initialise fields while you declare them (line 10 and 11)  
-		consumedValues = 0;	    
-		
-		map = new HashMap<Integer,String>();
-
-		for (Entry<Integer, String> entry : data.entrySet()) {
-			Integer k = entry.getKey();
-			String v = entry.getValue();
-			map.put(k, v);    	
-		}
+		}		    
 	}
 	
 	@Override
-	public void runBenchmark ()
-	{
-		// TODO: I moved this code here, as described on the changes made on Benchmark
-		// TODO: this 3 needs to eventually become a configuration parameter   
+	public void runBenchmark() {		
+		long startExistence = 0;
+		long startFetch = 0;
+		long finishExistence = 0;
+		long finishFetch = 0;
+		totalExistence = 0;
+		totalFetch = 0;
+		map = new ArrayList<String>();
 		
-		while (consumedValues != 3) {
-    		long start = System.currentTimeMillis();
-    		int randomNum = ThreadLocalRandom.current().nextInt(0, data.size() + 1);
+		while (nTest != testCount) {
+    		int randomNum = ThreadLocalRandom.current().nextInt(0, (data.size()*2) + 1);
     	
     	// TODO: when testing with millions of entries you won't be able to afford that much output
     	// One way to fix this is to remove all the println() command, leaving data.get() only
@@ -52,27 +39,24 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
     	// every 1000 consumedValues. See here on how to do that:
     	// https://www.java67.com/2015/10/how-to-solve-fizzbuzz-in-java.html
     	// (you're going to have only one if in this case, checking if consumedValue is 1000, 2000, etc) 
-    	// 
-    		if (map.containsKey(randomNum)) {
-    			System.out.println("The key of '" + randomNum + "' exists in the map");
-    			System.out.println("The value related to this key is: " + data.get(randomNum));
+   
+    		startExistence = System.currentTimeMillis();
+    		
+    		if (data.containsKey(randomNum)) {
+    			finishExistence = System.currentTimeMillis();
+    			totalExistence = totalExistence + (finishExistence - startExistence);
+    			startFetch = System.currentTimeMillis();
+    			String consumedValue = data.get(randomNum);
+    			finishFetch = System.currentTimeMillis();
+    			totalFetch = totalFetch + (finishFetch - startFetch);
+    			map.add(consumedValue);
     		} else {
-    			System.out.println(randomNum + " isn't a valid key in the map");
+    			finishExistence = System.currentTimeMillis();
+    			totalExistence = totalExistence + (finishExistence - startExistence);
     		}	    
-    	
-    	// TODO: start/finish updates should be strictly close to the instructions to be benchmarked
-    	// So, this cannot work, cause you're clocking the time to print too (which is irrelevant)
-    	// Moreover, we want to count two separate elapsed times: the time needed for containsKey()
-    	// and the time needed for data.get().
-    	// This means you've to use the start/finish trick twice and both times update two different 
-    	// total counters (let's say existenceTime, fetchTime.
-    	// 
-    	// Also, report all in printReport(): existence, fetch, total (existence+fetch), averages of all 3
-    	// (ie, all divided by consumedItems).
-    	
-    		long finish = System.currentTimeMillis();
-    		timeElapsed = timeElapsed + (finish - start);
-    		consumedValues = consumedValues + 1;
+    		
+    		timeElapsed = totalExistence + totalFetch;
+    		nTest = nTest + 1;
     	}		
 	}
 
@@ -81,10 +65,10 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 
 	public void printReport() {
 		System.out.println("--- Existence & Retrieval ---");
-	    
-		System.out.println("Amount of keys/values in map: " + data.size());
-		System.out.println("Amount of times checked for a valid key: " + consumedValues);
-		System.out.println("Took : " + timeElapsed + "ms");		
+		System.out.println("Fetched Values: " + map.size() + "/" + data.size());
+	    System.out.println("Existence Total Time: " + totalExistence + "ms");
+		System.out.println("Fetch Total Time: " + totalFetch + "ms");
+		System.out.println("Total time: " + timeElapsed + "ms");		
 	}
 
 }

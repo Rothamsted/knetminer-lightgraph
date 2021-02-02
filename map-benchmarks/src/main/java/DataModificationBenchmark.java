@@ -1,85 +1,75 @@
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
 public class DataModificationBenchmark extends Benchmark {
 	
-	private int nTest;
-	private int randomNum;
-	private int minLen;
-	private int maxLen;
+	private long totalDelete;	
+	private long totalModify;
+	private long totalAdd;
 	private String generatedValue;
-	private Map<Integer,String> map;
+	private int deleteCounter;
+	private int modifyCounter;
+	private int addCounter;
 	
 	void createData() {
-		timeElapsed = 0;
-		for (int i=0; i<10; i++) {
-			minLen = 3;
-			maxLen = 7;
+		for (int i=0; i<testSize; i++) {
 			int index = data.size();
-			generatedValue = RandomStringUtils.randomAlphanumeric(minLen, maxLen);
+			generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
 			data.put(index, generatedValue);
 		}			
 	}
 
 	void printReport() {
 		System.out.println("--- Data Modification ---");
-		System.out.println(map);	
-		System.out.println("Took : " + timeElapsed + "ms");	
-		
+		System.out.println("Total time taken to complete " + deleteCounter + " 'delete' operations: " + totalDelete + "ms");
+		System.out.println("Total time taken to complete " + modifyCounter + " 'modify' operations: " + totalModify + "ms");
+		System.out.println("Total time taken to complete " + addCounter + " 'add' opertaions: " + totalAdd + "ms");	
 	}
 
 	@Override
-	void runBenchmark() {
-		randomNum = ThreadLocalRandom.current().nextInt(0, 2);
-		nTest = 0;		
+	void runBenchmark() {		
 		generatedValue = "";
+		totalDelete = 0;
+		deleteCounter = 0;
+		totalModify = 0;
+		modifyCounter = 0;
+		totalAdd = 0;
+		addCounter = 0;
 		
-		while (nTest != 3) {
-			if (randomNum == 0) {
+		while (nTest != testCount) {
+			int operationID = ThreadLocalRandom.current().nextInt(0, 3);
+			if (operationID == 0) {
 				//delete
 				int positionDel = ThreadLocalRandom.current().nextInt(0,(data.size()-1));
+				long startDelete = System.currentTimeMillis();
 				data.remove(positionDel);
-				System.out.println("The operation chosen was: delete" );
-				System.out.println("The position deleted was: " + positionDel);
+				long finishDelete = System.currentTimeMillis();
+				totalDelete = totalDelete + (finishDelete - startDelete);
+				deleteCounter = deleteCounter + 1;
 				nTest = nTest + 1;
-			} else if (randomNum == 1) {
+			} else if (operationID == 1) {
 				//modify
 				int positionMod = ThreadLocalRandom.current().nextInt(0,(data.size()-1));
-				generatedValue = RandomStringUtils.randomAlphanumeric(minLen, maxLen);
+				generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
+				long startModify = System.currentTimeMillis();
 		    	data.replace(positionMod, generatedValue);
-		    	System.out.println("The operation chosen was: modify" );
-		    	System.out.println("The key modified was: " + positionMod);
+		    	long finishModify = System.currentTimeMillis();
+		    	totalModify = totalModify + (finishModify - startModify);
+		    	modifyCounter = modifyCounter + 1;
 		    	nTest = nTest + 1;
 			} else {
 				//add
-				generatedValue = RandomStringUtils.randomAlphanumeric(minLen, maxLen);
+				generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
 				int positionAdd = data.size();
+				long startAdd = System.currentTimeMillis();
 				data.put(positionAdd, generatedValue);
-				System.out.println("The operation chosen was: add" );
+				long finishAdd = System.currentTimeMillis();
+				totalAdd = totalAdd + (finishAdd - startAdd);
+				addCounter = addCounter + 1;
 				nTest = nTest + 1;
-			}	
-			randomNum = ThreadLocalRandom.current().nextInt(0, 2);
-			
-			map = new HashMap<Integer,String>();
-			
-		    for (Entry<Integer, String> entry : data.entrySet()) {
-		    	long start = System.currentTimeMillis();
-		    	Integer k = entry.getKey();
-		    	String v = entry.getValue();
-		    	map.put(k, v);
-		    	long finish = System.currentTimeMillis();
-		    	timeElapsed = timeElapsed + (finish - start);	    	
-		    }
-		    
-//		    System.out.println(map);
-		    
+			}	    
 		}
-		
 	}
-
 }
