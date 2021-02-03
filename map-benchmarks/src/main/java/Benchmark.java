@@ -32,11 +32,20 @@ public abstract class Benchmark {
 				.createOrOpen();
 	}
 		
+	/**
+	 * Runs everything in one go.
+	 */
 	public void runAll () {
+		// TODO: we need to be able to set this from the caller, before runAll() or something
+		// ie, we need to be able to write setTestSize( 100 ), set
 		stringMinLen = 3;
 		stringMaxLen = 7;
+		// TODO: see if you prefer better names, eg, dataSize, testRepeats
 		testCount = 1000;
 		testSize = 1000;
+		// TODO: it's not so worth to give a field the scope of a top-level class just because you're going
+		// to use many times locally. nTest is only needed during loops, you don't really need to expose
+		// it outside and doing it unnecessarily is error-prone
 		nTest = 0;
 		init();
 		createData();

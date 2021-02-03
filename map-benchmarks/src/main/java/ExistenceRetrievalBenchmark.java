@@ -20,7 +20,11 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 	}
 	
 	@Override
-	public void runBenchmark() {		
+	public void runBenchmark() {
+		// TODO: clearly, you need separated total variables (totalExistence, totalFetch), 
+		// but you might want to simplify things by using start/end variables, by having just a pair of them,
+		// to be used multiple times before/after something to be clocked.
+		// (this other way of yours is a bit more verbose/readable, not sure it's so useful here)
 		long startExistence = 0;
 		long startFetch = 0;
 		long finishExistence = 0;
@@ -40,6 +44,15 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
     	// https://www.java67.com/2015/10/how-to-solve-fizzbuzz-in-java.html
     	// (you're going to have only one if in this case, checking if consumedValue is 1000, 2000, etc) 
    
+    		// TODO: see if like this more:
+    		// start = <currentTime>
+    		// boolean doesExist = data.containsKey(randomNum)
+    		// totalExistence += <currentTime> - start
+    		// // var += expr is a shorthand for: var = var + <expr>, but write it in the form you prefer (ref: https://www.w3schools.com/java/java_operators.asp)
+    		// 
+    		// if ( doesExist ) ... 
+    		//
+    		
     		startExistence = System.currentTimeMillis();
     		
     		if (data.containsKey(randomNum)) {
@@ -65,6 +78,7 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 
 	public void printReport() {
 		System.out.println("--- Existence & Retrieval ---");
+		// TODO: see notes I wrote on RetrievalBenchmark regarding this map thing. 
 		System.out.println("Fetched Values: " + map.size() + "/" + data.size());
 	    System.out.println("Existence Total Time: " + totalExistence + "ms");
 		System.out.println("Fetch Total Time: " + totalFetch + "ms");
