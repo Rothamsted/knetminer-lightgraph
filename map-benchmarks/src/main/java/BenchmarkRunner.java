@@ -10,11 +10,12 @@ public class BenchmarkRunner {
 //		rBenchmark.runAll();
 //		rBenchmark.runAll();
 //		rBenchmark.runAll();		
+		// TODO: we should set parameters here (data size, test count) and then run it)
+		// When you increase the data size, probably you'll want to run one benchmark at a time, but that's up to you
 		erBenchmark.runAll();
 		erBenchmark.runAll();
 		erBenchmark.runAll();
 		//dmBenchmark.runAll();
-
 	}
 
 }
