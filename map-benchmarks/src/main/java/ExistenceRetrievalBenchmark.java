@@ -1,4 +1,4 @@
-
+  
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -9,7 +9,7 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 
 	private long totalExistence;
 	private long totalFetch;
-	private List<String> map;
+	private List<String> list;
 	
 	public void createData() {
 		for (int i=0; i<testSize; i++) {
@@ -20,14 +20,18 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 	}
 	
 	@Override
-	public void runBenchmark() {		
+	public void runBenchmark() {
+		// TODO: clearly, you need separated total variables (totalExistence, totalFetch), 
+		// but you might want to simplify things by using start/end variables, by having just a pair of them,
+		// to be used multiple times before/after something to be clocked.
+		// (this other way of yours is a bit more verbose/readable, not sure it's so useful here)
 		long startExistence = 0;
 		long startFetch = 0;
 		long finishExistence = 0;
 		long finishFetch = 0;
 		totalExistence = 0;
 		totalFetch = 0;
-		map = new ArrayList<String>();
+		list = new ArrayList<String>();
 		
 		while (nTest != testCount) {
     		int randomNum = ThreadLocalRandom.current().nextInt(0, (data.size()*2) + 1);
@@ -40,32 +44,38 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
     	// https://www.java67.com/2015/10/how-to-solve-fizzbuzz-in-java.html
     	// (you're going to have only one if in this case, checking if consumedValue is 1000, 2000, etc) 
    
-    		startExistence = System.currentTimeMillis();
+    		// TODO: see if like this more:
+    		// start = <currentTime>
+    		// boolean doesExist = data.containsKey(randomNum)
+    		// totalExistence += <currentTime> - start
+    		// // var += expr is a shorthand for: var = var + <expr>, but write it in the form you prefer (ref: https://www.w3schools.com/java/java_operators.asp)
+    		// 
+    		// if ( doesExist ) ... 
+    		//
     		
-    		if (data.containsKey(randomNum)) {
-    			finishExistence = System.currentTimeMillis();
-    			totalExistence = totalExistence + (finishExistence - startExistence);
+    		startExistence = System.currentTimeMillis();
+    		boolean doesExist = data.containsKey(randomNum);
+    		finishExistence = System.currentTimeMillis();
+			totalExistence += (finishExistence - startExistence);
+    		
+    		if (doesExist) {
     			startFetch = System.currentTimeMillis();
     			String consumedValue = data.get(randomNum);
     			finishFetch = System.currentTimeMillis();
-    			totalFetch = totalFetch + (finishFetch - startFetch);
-    			map.add(consumedValue);
+    			totalFetch += (finishFetch - startFetch);
+    			list.add(consumedValue);
     		} else {
-    			finishExistence = System.currentTimeMillis();
-    			totalExistence = totalExistence + (finishExistence - startExistence);
+    			//
     		}	    
     		
-    		timeElapsed = totalExistence + totalFetch;
-    		nTest = nTest + 1;
+    		timeElapsed = (totalExistence + totalFetch);
+    		nTest += 1;
     	}		
 	}
 
-
-
-
 	public void printReport() {
-		System.out.println("--- Existence & Retrieval ---");
-		System.out.println("Fetched Values: " + map.size() + "/" + data.size());
+		System.out.println("--- Existence & Retrieval ---"); 
+		System.out.println("Fetched Values: " + list.size() + "/" + testCount);
 	    System.out.println("Existence Total Time: " + totalExistence + "ms");
 		System.out.println("Fetch Total Time: " + totalFetch + "ms");
 		System.out.println("Total time: " + timeElapsed + "ms");		

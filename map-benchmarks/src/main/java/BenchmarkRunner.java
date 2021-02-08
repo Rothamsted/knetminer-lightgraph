@@ -6,10 +6,14 @@ public class BenchmarkRunner {
 		Benchmark rBenchmark = new RetrievalBenchmark();
 		Benchmark erBenchmark = new ExistenceRetrievalBenchmark();
 		Benchmark dmBenchmark = new DataModificationBenchmark();
-		spBenchmark.runAll();
-		rBenchmark.runAll();
+		//spBenchmark.runAll();
+//		rBenchmark.runAll();
+//		rBenchmark.runAll();
+//		rBenchmark.runAll();		
 		erBenchmark.runAll();
-		dmBenchmark.runAll();
+		erBenchmark.runAll();
+		erBenchmark.runAll();
+		//dmBenchmark.runAll();
 
 	}
 

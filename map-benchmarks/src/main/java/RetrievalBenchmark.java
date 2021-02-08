@@ -1,13 +1,9 @@
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
 public class RetrievalBenchmark extends Benchmark{
-	
-	private List<String> map;
 
 	public void createData() {
 		
@@ -19,7 +15,7 @@ public class RetrievalBenchmark extends Benchmark{
 	}
 
 	public void printReport() {
-		System.out.println("Times Retrieved: " + map.size());
+		System.out.println("Times Retrieved: " + testCount);
 		System.out.println("Took : " + timeElapsed + "ms");
 	}
 
@@ -27,16 +23,14 @@ public class RetrievalBenchmark extends Benchmark{
 	void runBenchmark() {
 		
 		System.out.println("--- Retrieval ---");
-		map = new ArrayList<String>();
 		
 		while (nTest < testCount) {
 			int randomKey = ThreadLocalRandom.current().nextInt(0, data.size());
 			long start = System.currentTimeMillis();
 			String retrievedValue = data.get(randomKey);
 			long finish = System.currentTimeMillis();
-			timeElapsed = timeElapsed + (finish - start);
-			map.add(retrievedValue);
-			nTest = nTest + 1;
+			timeElapsed += (finish - start);
+			nTest += 1;
 		}
 	}
 }

@@ -42,6 +42,33 @@ public class DataModificationBenchmark extends Benchmark {
 			int operationID = ThreadLocalRandom.current().nextInt(0, 3);
 			if (operationID == 0) {
 				//delete
+				
+				/*
+				 TODO: do this (remove() + timing) only when the random key exists. We want to count the time
+				 for actual deletions, without including the time that mapdb takes to verify it has nothing to remove.
+				 So, change it like this:
+				 
+				 if operationID is DELETE:
+				   int positionDel = generateRandomExistingKey ();
+				
+				 where generateRandomExistingKey () is a utility method (private? public? On which class?) that does something like:
+				 
+				 <visibility> int generateRandomExistingKey ()
+				 {
+				   int key = -1;
+				   do
+					   key = ThreadLocalRandom.current().nextInt(0, data.size ());
+				   while ( !data.containsKey ( key ) );
+				   return key;
+				  }
+				  
+				  The method is useful on the other operations too (see below)
+				*/ 
+				
+			 
+				// TODO: as you wrote rightly in other cases, you need nextInt ( 0, data.size() ), without - 1, 
+				// because the comments on nextInt() clearly say the generated numbers fall in [lo, hi), ie, the second
+				// extreme is exclusive, precisely because most cases where this is used are like the hereby
 				int positionDel = ThreadLocalRandom.current().nextInt(0,(data.size()-1));
 				long startDelete = System.currentTimeMillis();
 				data.remove(positionDel);
@@ -51,6 +78,10 @@ public class DataModificationBenchmark extends Benchmark {
 				nTest = nTest + 1;
 			} else if (operationID == 1) {
 				//modify
+				
+				// TODO: as above, we want to know the times for changing surely existing keys, without mixing it with   
+				// the non-existing key case. So, use generateRandomExistingKey() as above
+				//
 				int positionMod = ThreadLocalRandom.current().nextInt(0,(data.size()-1));
 				generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
 				long startModify = System.currentTimeMillis();

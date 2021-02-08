@@ -35,12 +35,13 @@ public abstract class Benchmark {
 	public void runAll () {
 		stringMinLen = 3;
 		stringMaxLen = 7;
-		testCount = 1000;
-		testSize = 1000;
+		testCount = 200000;
+		testSize = 10000;
 		nTest = 0;
+		timeElapsed = 0;
 		init();
 		createData();
-		runBenchmark ();
+		runBenchmark();
 		printReport();
 		data.close();
 	}
