@@ -31,18 +31,20 @@ public abstract class Benchmark {
 				.counterEnable()
 				.createOrOpen();
 	}
+	
+	public void setTestSize(int a) {
+		this.testSize = a;
+	}
+	
+	public void setTestCount(int a) {
+		this.testCount = a;
+	}
 		
 	public void runAll () {
 		// TODO: we need to be able to set this from the caller, before runAll() or something
 		// ie, we need to be able to write setTestSize( 100 ), set
 		stringMinLen = 3;
 		stringMaxLen = 7;
-		testCount = 200000;
-		testSize = 10000;
-		// TODO: see if you prefer better names, eg, dataSize, testRepeats
-		// TODO: it's not so worth to give a field the scope of a top-level class just because you're going
-		// to use many times locally. nTest is only needed during loops, you don't really need to expose
-		// it outside and doing it unnecessarily is error-prone
 		nTest = 0;
 		timeElapsed = 0;
 		init();

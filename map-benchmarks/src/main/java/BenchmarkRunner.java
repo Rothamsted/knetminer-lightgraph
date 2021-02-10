@@ -6,16 +6,15 @@ public class BenchmarkRunner {
 		Benchmark rBenchmark = new RetrievalBenchmark();
 		Benchmark erBenchmark = new ExistenceRetrievalBenchmark();
 		Benchmark dmBenchmark = new DataModificationBenchmark();
-		//spBenchmark.runAll();
-//		rBenchmark.runAll();
-//		rBenchmark.runAll();
-//		rBenchmark.runAll();		
-		// TODO: we should set parameters here (data size, test count) and then run it)
-		// When you increase the data size, probably you'll want to run one benchmark at a time, but that's up to you
-		erBenchmark.runAll();
-		erBenchmark.runAll();
-		erBenchmark.runAll();
-		//dmBenchmark.runAll();
+		
+		spBenchmark.setTestSize(1000);
+		spBenchmark.runAll();
+		
+		rBenchmark.setTestSize(1000);
+		rBenchmark.setTestCount(10000);
+		rBenchmark.runAll();		
+//		erBenchmark.runAll();
+//		dmBenchmark.runAll();
 	}
 
 }
