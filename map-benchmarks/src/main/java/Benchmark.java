@@ -41,8 +41,6 @@ public abstract class Benchmark {
 	}
 		
 	public void runAll () {
-		// TODO: we need to be able to set this from the caller, before runAll() or something
-		// ie, we need to be able to write setTestSize( 100 ), set
 		stringMinLen = 3;
 		stringMaxLen = 7;
 		nTest = 0;

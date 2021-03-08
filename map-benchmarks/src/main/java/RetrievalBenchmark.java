@@ -31,8 +31,6 @@ public class RetrievalBenchmark extends Benchmark{
 			long finish = System.currentTimeMillis();
 			timeElapsed += (finish - start);
 			nTest += 1;
-			timeElapsed += (finish - start);
-			nTest = nTest + 1;
 		}
 	}
 }

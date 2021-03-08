@@ -5,9 +5,9 @@ public class StringsPopulationBenchmark extends Benchmark {
 	@Override
 	public void createData() {
 		for (int i=0; i<testSize; i++) {
-			long start = System.currentTimeMillis();
 			int index = data.size();
 			String generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
+			long start = System.currentTimeMillis();
 			data.put(index, generatedValue);
 			long finish = System.currentTimeMillis();
 			timeElapsed = timeElapsed + (finish - start);
