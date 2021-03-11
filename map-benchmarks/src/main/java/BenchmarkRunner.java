@@ -9,7 +9,9 @@ import picocli.CommandLine.Option;
 
 public class BenchmarkRunner implements Runnable{
 	
-	@Option(names = {"-sp", "stringPopulation"})
+	private Benchmark benchmark;
+	
+	@Option(names = {"-sp", "stringPop"})
 	private static String stringPop;
 	
 	@Option(names = {"-r", "retrieval"})
@@ -27,85 +29,48 @@ public class BenchmarkRunner implements Runnable{
 	@Option(names = {"-tc", "testCount"})
 	private static Integer testCount;
 
-	public static void main(String[] args) {
-		Benchmark spBenchmark = new StringsPopulationBenchmark();
-		Benchmark rBenchmark = new RetrievalBenchmark();
-		Benchmark erBenchmark = new ExistenceRetrievalBenchmark();
-		Benchmark dmBenchmark = new DataModificationBenchmark();
+	public  void main(String[] args) {
 		
 		CommandLine.run(new BenchmarkRunner(), args);
 		
-		if (stringPop != null) {
-			
-			if (dataSize != null) {
-				spBenchmark.setTestSize(dataSize);
-				spBenchmark.runAll();
-			} else {
-				System.out.println("DATA SIZE LEFT EMPTY : USE '-ds' OR 'dataSize' FOLLOWED BY A NUMBER");
-			}
-			
-		} else if (retrieval != null) {
-			if (dataSize != null) {
-				rBenchmark.setTestSize(dataSize);
+		if (dataSize != null) {
+			if (stringPop != null) {
+				benchmark = new StringsPopulationBenchmark();
+				benchmark.setTestSize(dataSize);
+				benchmark.runAll();
+			} else if (retrieval != null) {
+				benchmark = new RetrievalBenchmark();
+				benchmark.setTestSize(dataSize);
 				if (testCount != null) {
-					rBenchmark.setTestCount(testCount);
-					rBenchmark.runAll();
+					benchmark.setTestCount(testCount);
+					benchmark.runAll();
 				} else {
 					System.out.println("TEST COUNT LEFT EMPTY : USE '-tc' OR 'testCount' FOLLOWED BY A NUMBER");
-				}
-			} else {
-				System.out.println("DATA SIZE LEFT EMPTY : USE '-ds' OR 'dataSize' FOLLOWED BY A NUMBER");
-			}
-			
-		} else if (exRetrieval != null) {
-			if (dataSize != null) {
-				erBenchmark.setTestSize(dataSize);
+				}		
+			} else if (exRetrieval != null) {
+				benchmark = new ExistenceRetrievalBenchmark();
+				benchmark.setTestSize(dataSize);
 				if (testCount != null) {
-					erBenchmark.setTestCount(testCount);
-					erBenchmark.runAll();
+					benchmark.setTestCount(testCount);
+					benchmark.runAll();
 				} else {
 					System.out.println("TEST COUNT LEFT EMPTY : USE '-tc' OR 'testCount' FOLLOWED BY A NUMBER");
-				}
-			} else {
-				System.out.println("DATA SIZE LEFT EMPTY : USE '-ds' OR 'dataSize' FOLLOWED BY A NUMBER");
-			}
-			
-		} else if (dataMod != null) {
-			
-			if (dataSize != null) {
-				dmBenchmark.setTestSize(dataSize);
+				}				
+			} else if (dataMod != null) {
+				benchmark = new DataModificationBenchmark();
+				benchmark.setTestSize(dataSize);				
 				if (testCount != null) {
-					dmBenchmark.setTestCount(testCount);
-					dmBenchmark.runAll();
+					benchmark.setTestCount(testCount);
+					benchmark.runAll();
 				} else {
 					System.out.println("TEST COUNT LEFT EMPTY : USE '-tc' OR 'testCount' FOLLOWED BY A NUMBER");
-				}
-			} else {
-				System.out.println("DATA SIZE LEFT EMPTY : USE '-ds' OR 'dataSize' FOLLOWED BY A NUMBER");
-			}
-			
-		} else {			
-			System.out.println("NO BENCHMARK SELECTED");			
-		}	
-		
-//		spBenchmark.setTestSize(10000);
-//		spBenchmark.runAll();
-		
-//		rBenchmark.setTestSize(1000);
-//		rBenchmark.setTestCount(10000);
-//		rBenchmark.runAll();
-		
-//		erBenchmark.setTestSize(1000);
-//		erBenchmark.setTestCount(10000);
-//		erBenchmark.runAll();
-	
-//		dmBenchmark.setTestSize(1000);
-//		dmBenchmark.setTestCount(6000);
-//		dmBenchmark.runAll();
-			
-//		rBenchmark.runAll();		
-//		erBenchmark.runAll();
-//		dmBenchmark.runAll();
+				}				
+			} else {			
+				System.out.println("NO BENCHMARK SELECTED");			
+			}			
+		} else {
+			System.out.println("DATA SIZE LEFT EMPTY : USE '-ds' OR 'dataSize' FOLLOWED BY A NUMBER");
+		}
 	}
 
 	@Override
