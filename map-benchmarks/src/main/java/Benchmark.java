@@ -7,22 +7,15 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 // TODO: these comments are to be removed
-// Runnable is required by picocli, it's the way it recognises a line command, it invokes Runnable.run()
-// Moreover, we switched Benchmark from being abstract to a concrete class with dummy methods. This is 
-// to be able to use command/subcommands in picocli, which requires a top-level class to be instantiated
-// in this case.
+//
+// Runnable is required by picocli (in the subclasses), it's the way it recognises a line command, 
+// it invokes Runnable.run()
 //
 // picocli is able to merge all the annotations (@Command, @Option) in a class hierarchy (class, superclasses).
 // So, it's a form of inheritance, similar to the regular class inheritance.
 //
 // 
-@Command ( 
-	subcommands = { 
-		StringsPopulationBenchmark.class
-		// TODO: annotate add the other subcommands
-	}
-)
-public class Benchmark implements Runnable {
+public abstract class Benchmark implements Runnable {
 	/**
 	 * this sets the package visibility, so that only BenchmarkRunner can invoke this top level class.
 	 * We want this because it isn't useful elsewhere.
@@ -44,23 +37,12 @@ public class Benchmark implements Runnable {
 
 	protected int testCount;
 	protected int nTest;
-
 	
-	private final static String CONCRETE_IMPL_MSG = "This method needs an actual implementation in the subclass";
+	public abstract void createData();
 	
-	// As said above, dummy implementations are provided that return an error, so that the sub-class writer is forced
-	// to override them with a real implementation.
-	public void createData() {
-		throw new UnsupportedOperationException ( CONCRETE_IMPL_MSG );
-	}
+	public abstract void printReport();
 	
-	public void printReport() {
-		throw new UnsupportedOperationException ( CONCRETE_IMPL_MSG );
-	}
-	
-	public void runBenchmark() {
-		throw new UnsupportedOperationException ( CONCRETE_IMPL_MSG );
-	}
+	public abstract void runBenchmark();
 	
 	public void init() {
 		DB db = DBMaker
