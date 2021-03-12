@@ -1,5 +1,8 @@
 import org.apache.commons.lang3.RandomStringUtils;
 
+import picocli.CommandLine.Command;
+
+@Command ( name = "string-population" )
 public class StringsPopulationBenchmark extends Benchmark {
 	
 	@Override
@@ -21,7 +24,7 @@ public class StringsPopulationBenchmark extends Benchmark {
 	}
 
 	@Override
-	void runBenchmark() {
+	public void runBenchmark() {
 		// Not needed within this benchmark
 	}
 
