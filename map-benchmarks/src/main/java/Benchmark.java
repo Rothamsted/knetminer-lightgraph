@@ -15,11 +15,13 @@ import picocli.CommandLine.Option;
 // picocli is able to merge all the annotations (@Command, @Option) in a class hierarchy (class, superclasses).
 // So, it's a form of inheritance, similar to the regular class inheritance.
 //
-// 
+
 @Command ( 
 	subcommands = { 
-		StringsPopulationBenchmark.class
-		// TODO: annotate add the other subcommands
+		StringsPopulationBenchmark.class,
+		RetrievalBenchmark.class,
+		ExistenceRetrievalBenchmark.class,
+		DataModificationBenchmark.class
 	}
 )
 public class Benchmark implements Runnable {
@@ -36,15 +38,13 @@ public class Benchmark implements Runnable {
 	protected int stringMinLen;
 	protected int stringMaxLen;
 	
-	// TODO: remove this comment
-	// Because of the inheritance mentioned above, all the Benchmark command lines will have this 
-	// common command line argument.
-	@Option ( names = { "-s", "--test-size" }, description = "The number of MapDB entries to be used for the test" )
+	@Option (names={"-s", "--test-size"}, description="The number of MapDB entries to be used for the test")
 	protected int testSize;
-
+	
+	@Option(names={"-c", "--test-count"}, description="The number of times the certain action is repeated")
 	protected int testCount;
+	
 	protected int nTest;
-
 	
 	private final static String CONCRETE_IMPL_MSG = "This method needs an actual implementation in the subclass";
 	
@@ -83,10 +83,10 @@ public class Benchmark implements Runnable {
 	}
 		
 	public void runAll () {
-		// TODO: we need to be able to set this from the caller, before runAll() or something
-		// ie, we need to be able to write setTestSize( 100 ), set
 		stringMinLen = 3;
 		stringMaxLen = 7;
+		setTestSize(testSize);
+		setTestCount(testCount);
 		nTest = 0;
 		timeElapsed = 0;
 		init();
