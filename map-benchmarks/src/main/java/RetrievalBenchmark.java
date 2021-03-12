@@ -3,6 +3,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import picocli.CommandLine.Command;
+
+@Command(name="retrieval")
 public class RetrievalBenchmark extends Benchmark{
 
 	public void createData() {
@@ -20,7 +23,7 @@ public class RetrievalBenchmark extends Benchmark{
 	}
 
 	@Override
-	void runBenchmark() {
+	public void runBenchmark() {
 		
 		System.out.println("--- Retrieval ---");
 		
@@ -31,8 +34,6 @@ public class RetrievalBenchmark extends Benchmark{
 			long finish = System.currentTimeMillis();
 			timeElapsed += (finish - start);
 			nTest += 1;
-			timeElapsed += (finish - start);
-			nTest = nTest + 1;
 		}
 	}
 }

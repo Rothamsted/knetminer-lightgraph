@@ -3,6 +3,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import picocli.CommandLine.Command;
+
+@Command(name="data-modification")
 public class DataModificationBenchmark extends Benchmark {
 	
 	private long totalDelete;	
@@ -13,7 +16,7 @@ public class DataModificationBenchmark extends Benchmark {
 	private int modifyCounter;
 	private int addCounter;
 	
-	void createData() {
+	public void createData() {
 		for (int i=0; i<testSize; i++) {
 			int index = data.size();
 			generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
@@ -21,7 +24,7 @@ public class DataModificationBenchmark extends Benchmark {
 		}			
 	}
 
-	void printReport() {
+	public void printReport() {
 		System.out.println("--- Data Modification ---");
 		System.out.println("Total time taken to complete " + deleteCounter + " 'delete' operations: " + totalDelete + "ms");
 		System.out.println("Total time taken to complete " + modifyCounter + " 'modify' operations: " + totalModify + "ms");
@@ -29,7 +32,7 @@ public class DataModificationBenchmark extends Benchmark {
 	}
 
 	@Override
-	void runBenchmark() {		
+	public void runBenchmark() {		
 		generatedValue = "";
 		totalDelete = 0;
 		deleteCounter = 0;
@@ -65,41 +68,34 @@ public class DataModificationBenchmark extends Benchmark {
 				  The method is useful on the other operations too (see below)
 				*/ 
 				
-			 
-				// TODO: as you wrote rightly in other cases, you need nextInt ( 0, data.size() ), without - 1, 
-				// because the comments on nextInt() clearly say the generated numbers fall in [lo, hi), ie, the second
-				// extreme is exclusive, precisely because most cases where this is used are like the hereby
-				int positionDel = ThreadLocalRandom.current().nextInt(0,(data.size()-1));
-				long startDelete = System.currentTimeMillis();
+				int positionDel = ThreadLocalRandom.current().nextInt(0,(data.size()));
+				long start = System.currentTimeMillis();
 				data.remove(positionDel);
-				long finishDelete = System.currentTimeMillis();
-				totalDelete = totalDelete + (finishDelete - startDelete);
-				deleteCounter = deleteCounter + 1;
-				nTest = nTest + 1;
+				long finish = System.currentTimeMillis();
+				totalDelete =+ (finish - start);
+				deleteCounter =+ 1;
+				nTest =+ 1;
 			} else if (operationID == 1) {
 				//modify
 				
-				// TODO: as above, we want to know the times for changing surely existing keys, without mixing it with   
-				// the non-existing key case. So, use generateRandomExistingKey() as above
-				//
-				int positionMod = ThreadLocalRandom.current().nextInt(0,(data.size()-1));
+				int positionMod = ThreadLocalRandom.current().nextInt(0,(data.size()));
 				generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
-				long startModify = System.currentTimeMillis();
+				long start = System.currentTimeMillis();
 		    	data.replace(positionMod, generatedValue);
-		    	long finishModify = System.currentTimeMillis();
-		    	totalModify = totalModify + (finishModify - startModify);
-		    	modifyCounter = modifyCounter + 1;
-		    	nTest = nTest + 1;
+		    	long finish = System.currentTimeMillis();
+		    	totalModify =+ (finish - start);
+		    	modifyCounter =+ 1;
+		    	nTest =+ 1;
 			} else {
 				//add
 				generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
 				int positionAdd = data.size();
-				long startAdd = System.currentTimeMillis();
+				long start = System.currentTimeMillis();
 				data.put(positionAdd, generatedValue);
-				long finishAdd = System.currentTimeMillis();
-				totalAdd = totalAdd + (finishAdd - startAdd);
-				addCounter = addCounter + 1;
-				nTest = nTest + 1;
+				long finish = System.currentTimeMillis();
+				totalAdd =+ (finish - start);
+				addCounter =+ 1;
+				nTest =+ 1;
 			}	    
 		}
 	}
