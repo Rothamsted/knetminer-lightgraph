@@ -13,7 +13,7 @@ public class StringsPopulationBenchmark extends Benchmark {
 			String generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
 			data.put(index, generatedValue);
 			long finish = System.currentTimeMillis();
-			timeElapsed =+ (finish - start);
+			timeElapsed += (finish - start);
 		}
 	}
 

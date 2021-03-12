@@ -14,16 +14,7 @@ import picocli.CommandLine.Option;
 // picocli is able to merge all the annotations (@Command, @Option) in a class hierarchy (class, superclasses).
 // So, it's a form of inheritance, similar to the regular class inheritance.
 //
-
-@Command ( 
-	subcommands = { 
-		StringsPopulationBenchmark.class,
-		RetrievalBenchmark.class,
-		ExistenceRetrievalBenchmark.class,
-		DataModificationBenchmark.class
-	}
-)
-public class Benchmark implements Runnable {
+public abstract class Benchmark implements Runnable {
 	/**
 	 * this sets the package visibility, so that only BenchmarkRunner can invoke this top level class.
 	 * We want this because it isn't useful elsewhere.

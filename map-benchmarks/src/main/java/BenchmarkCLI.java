@@ -11,8 +11,10 @@ import picocli.CommandLine.Command;
  */
 @Command ( 
 	subcommands = { 
-		StringsPopulationBenchmark.class
-		// TODO: add the other subcommands
+		StringsPopulationBenchmark.class,
+		RetrievalBenchmark.class,
+		ExistenceRetrievalBenchmark.class,
+		DataModificationBenchmark.class
 	}
 )
 public class BenchmarkCLI implements Runnable
