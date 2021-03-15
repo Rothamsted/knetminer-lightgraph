@@ -3,6 +3,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import picocli.CommandLine.Command;
+
+@Command(name="data-modification")
 public class DataModificationBenchmark extends Benchmark {
 	
 	private long totalDelete;	
@@ -13,7 +16,7 @@ public class DataModificationBenchmark extends Benchmark {
 	private int modifyCounter;
 	private int addCounter;
 	
-	void createData() {
+	public void createData() {
 		for (int i=0; i<testSize; i++) {
 			int index = data.size();
 			generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
@@ -21,16 +24,15 @@ public class DataModificationBenchmark extends Benchmark {
 		}			
 	}
 
-	void printReport() {
+	public void printReport() {
 		System.out.println("--- Data Modification ---");
-		System.out.println("Data Size: " + testSize);
 		System.out.println("Total time taken to complete " + deleteCounter + " 'delete' operations: " + totalDelete + "ms");
 		System.out.println("Total time taken to complete " + modifyCounter + " 'modify' operations: " + totalModify + "ms");
 		System.out.println("Total time taken to complete " + addCounter + " 'add' opertaions: " + totalAdd + "ms");	
 	}
 
 	@Override
-	void runBenchmark() {		
+	public void runBenchmark() {		
 		generatedValue = "";
 		totalDelete = 0;
 		deleteCounter = 0;
@@ -70,23 +72,19 @@ public class DataModificationBenchmark extends Benchmark {
 				long start = System.currentTimeMillis();
 				data.remove(positionDel);
 				long finish = System.currentTimeMillis();
-				totalDelete =+ (finish - start);
-				deleteCounter =+ 1;
-				nTest =+ 1;
+				totalDelete += (finish - start);
+				deleteCounter += 1;
+				nTest += 1;
 			} else if (operationID == 1) {
 				//modify
-				
-				// TODO: as above, we want to know the times for changing surely existing keys, without mixing it with   
-				// the non-existing key case. So, use generateRandomExistingKey() as above
-				//
 				int positionMod = ThreadLocalRandom.current().nextInt(0,(data.size()));
 				generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
 				long start = System.currentTimeMillis();
 		    	data.replace(positionMod, generatedValue);
 		    	long finish = System.currentTimeMillis();
-		    	totalModify =+ (finish - start);
-		    	modifyCounter =+ 1;
-		    	nTest =+ 1;
+		    	totalModify += (finish - start);
+		    	modifyCounter += 1;
+		    	nTest += 1;
 			} else {
 				//add
 				generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
@@ -94,9 +92,9 @@ public class DataModificationBenchmark extends Benchmark {
 				long start = System.currentTimeMillis();
 				data.put(positionAdd, generatedValue);
 				long finish = System.currentTimeMillis();
-				totalAdd =+ (finish - start);
-				addCounter =+ 1;
-				nTest =+ 1;
+				totalAdd += (finish - start);
+				addCounter += 1;
+				nTest += 1;
 			}	    
 		}
 	}

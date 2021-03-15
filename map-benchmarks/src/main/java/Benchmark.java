@@ -1,24 +1,46 @@
-
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.HTreeMap;
 import org.mapdb.Serializer;
 
-public abstract class Benchmark {
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
+
+// TODO: these comments are to be removed
+//
+// Runnable is required by picocli (in the subclasses), it's the way it recognises a line command, 
+// it invokes Runnable.run()
+//
+// picocli is able to merge all the annotations (@Command, @Option) in a class hierarchy (class, superclasses).
+// So, it's a form of inheritance, similar to the regular class inheritance.
+//
+public abstract class Benchmark implements Runnable {
+	/**
+	 * this sets the package visibility, so that only BenchmarkRunner can invoke this top level class.
+	 * We want this because it isn't useful elsewhere.
+	 */
+	Benchmark ()
+	{
+	}
 	
 	protected long timeElapsed;
 	protected HTreeMap<Integer,String> data;
 	protected int stringMinLen;
 	protected int stringMaxLen;
+	
+	@Option (names={"-s", "--test-size"}, description="The number of MapDB entries to be used for the test")
 	protected int testSize;
+	
+	@Option(names={"-c", "--test-count"}, description="The number of times the certain action is repeated")
 	protected int testCount;
+	
 	protected int nTest;
 	
-	abstract void createData();
+	public abstract void createData();
 	
-	abstract void printReport();
+	public abstract void printReport();
 	
-	abstract void runBenchmark();
+	public abstract void runBenchmark();
 	
 	public void init() {
 		DB db = DBMaker
@@ -50,5 +72,14 @@ public abstract class Benchmark {
 		runBenchmark();
 		printReport();
 		data.close();
+	}
+
+
+	// Implemmenting this is required by Runnable
+	@Override
+	public void run ()
+	{
+		// Just invoking another method is a way to create method aliases. 
+		this.runAll ();
 	}
 }

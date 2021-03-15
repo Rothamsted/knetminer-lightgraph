@@ -1,13 +1,18 @@
-
+  
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import picocli.CommandLine.Command;
+
+@Command(name="existence")
 public class ExistenceRetrievalBenchmark extends Benchmark{
 
 	private long totalExistence;
 	private long totalFetch;
-	private int timesFetched;
+	private List<String> list;
 	
 	public void createData() {
 		for (int i=0; i<testSize; i++) {
@@ -23,31 +28,22 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 		long finish = 0;
 		totalExistence = 0;
 		totalFetch = 0;
-		timesFetched = 0;
+		list = new ArrayList<String>();
 		
 		while (nTest != testCount) {
     		int randomNum = ThreadLocalRandom.current().nextInt(0, (data.size()*2) + 1);
-   
-    		// TODO: see if like this more:
-    		// start = <currentTime>
-    		// boolean doesExist = data.containsKey(randomNum)
-    		// totalExistence += <currentTime> - start
-    		// // var += expr is a shorthand for: var = var + <expr>, but write it in the form you prefer (ref: https://www.w3schools.com/java/java_operators.asp)
-    		// 
-    		// if ( doesExist ) ... 
-    		//
     		
     		start = System.currentTimeMillis();
     		boolean doesExist = data.containsKey(randomNum);
     		finish = System.currentTimeMillis();
 			totalExistence += (finish - start);
-
+    		
     		if (doesExist) {
     			start = System.currentTimeMillis();
     			String consumedValue = data.get(randomNum);
     			finish = System.currentTimeMillis();
     			totalFetch += (finish - start);
-    			timesFetched += 1;
+    			list.add(consumedValue);
     		} else {
     			//
     		}	    
@@ -59,8 +55,7 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 
 	public void printReport() {
 		System.out.println("--- Existence & Retrieval ---"); 
-		System.out.println("Data Size: " + testSize);
-		System.out.println("Fetched Values: " + timesFetched + "/" + testCount);
+		System.out.println("Fetched Values: " + list.size() + "/" + testCount);
 	    System.out.println("Existence Total Time: " + totalExistence + "ms");
 		System.out.println("Fetch Total Time: " + totalFetch + "ms");
 		System.out.println("Total time: " + timeElapsed + "ms");		

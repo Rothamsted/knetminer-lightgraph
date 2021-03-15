@@ -1,16 +1,19 @@
 import org.apache.commons.lang3.RandomStringUtils;
 
+import picocli.CommandLine.Command;
+
+@Command ( name = "string-population" )
 public class StringsPopulationBenchmark extends Benchmark {
 	
 	@Override
 	public void createData() {
 		for (int i=0; i<testSize; i++) {
+			long start = System.currentTimeMillis();
 			int index = data.size();
 			String generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
-			long start = System.currentTimeMillis();
 			data.put(index, generatedValue);
 			long finish = System.currentTimeMillis();
-			timeElapsed = timeElapsed + (finish - start);
+			timeElapsed += (finish - start);
 		}
 	}
 
@@ -21,7 +24,7 @@ public class StringsPopulationBenchmark extends Benchmark {
 	}
 
 	@Override
-	void runBenchmark() {
+	public void runBenchmark() {
 		// Not needed within this benchmark
 	}
 
