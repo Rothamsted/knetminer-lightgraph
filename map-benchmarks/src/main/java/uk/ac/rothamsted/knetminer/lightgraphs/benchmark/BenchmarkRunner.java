@@ -1,3 +1,4 @@
+package uk.ac.rothamsted.knetminer.lightgraphs.benchmark;
 import picocli.CommandLine;
 
 public class BenchmarkRunner {

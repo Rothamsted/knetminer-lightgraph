@@ -1,3 +1,4 @@
+package uk.ac.rothamsted.knetminer.lightgraphs.benchmark;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.HTreeMap;

@@ -1,3 +1,4 @@
+package uk.ac.rothamsted.knetminer.lightgraphs.benchmark;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import picocli.CommandLine.Command;
