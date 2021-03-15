@@ -85,6 +85,7 @@ public class DataModificationBenchmark extends Benchmark {
 		    	totalModify += (finish - start);
 		    	modifyCounter += 1;
 		    	nTest += 1;
+
 			} else {
 				//add
 				generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
@@ -95,6 +96,7 @@ public class DataModificationBenchmark extends Benchmark {
 				totalAdd += (finish - start);
 				addCounter += 1;
 				nTest += 1;
+
 			}	    
 		}
 	}
