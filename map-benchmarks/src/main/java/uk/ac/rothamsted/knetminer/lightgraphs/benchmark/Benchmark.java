@@ -1,4 +1,5 @@
 package uk.ac.rothamsted.knetminer.lightgraphs.benchmark;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.HTreeMap;
@@ -28,13 +29,14 @@ public abstract class Benchmark implements Runnable {
 	protected long timeElapsed;
 	protected HTreeMap<Integer,String> data;
 	
+	//sets the variables to values in-case it's not specified by command line
 	@Option(names={"-string-min", "--min-len"}, description="The minimum length of randomised strings")
 	protected int stringMinLen = 3;
 	
 	@Option(names={"-string-max", "--max-len"}, description="The maxium length of the randomised strings")
 	protected int stringMaxLen = 100;
 	
-	//commandline way of instantly adding the inputted data into the global variable
+	//command line way of instantly adding the inputted data into the global variable
 	@Option(names={"-s", "--test-size"}, description="The number of MapDB entries to be used for the test")
 	protected int testSize;
 	
@@ -43,25 +45,32 @@ public abstract class Benchmark implements Runnable {
 	
 	protected int nTest;
 	
-	public abstract void createData();
+	public void createData() {
+		for (int i=0; i<testSize; i++) {
+			int index = data.size();
+			String generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
+			data.put(index, generatedValue);
+		}	
+	}
 	
 	public abstract void printReport();
 	
 	public abstract void runBenchmark();
 	
 	public void init() {
-		//creates db
+		//creates database file
 		DB db = DBMaker
 				.fileDB("target/file.db")
 				.fileDeleteAfterClose()
 				.make();
-		//creates map within that db file
+		//creates map within that database file
 		data = db
 				.hashMap("data", Serializer.INTEGER, Serializer.STRING)
 				.counterEnable()
 				.createOrOpen();
 	}
-	//externally able to set size & enumerations
+	
+	//externally able to set size & enumerations (before the change to command line)
 	public void setTestSize(int a) {
 		this.testSize = a;
 	}

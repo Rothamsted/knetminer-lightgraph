@@ -8,18 +8,12 @@ import picocli.CommandLine.Command;
 public class StringsPopulationBenchmark extends Benchmark {
 	
 	//method to create data to fill the map of 'testSize's size
-	@Override 
-	public void createData() {
-		for (int i=0; i<testSize; i++) {
-			long start = System.currentTimeMillis(); //storage variable for start time
-			int index = data.size(); 
-			String generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen); //generating a random string of a certain length
-			data.put(index, generatedValue); //placing generatedString in the list
-			long finish = System.currentTimeMillis(); //storage variable for end time
-			timeElapsed += (finish - start); //adding all the total times together by taking the start time away from the end time
-		}
-	}
 
+	@Override
+	public void createData() {
+		//makes sure to not create double the amount of data
+	}
+	
 	public void printReport() {
 		System.out.println("--- String Population ---");
 		System.out.println("Amount of values populated: " + data.size());
@@ -28,7 +22,14 @@ public class StringsPopulationBenchmark extends Benchmark {
 
 	@Override
 	public void runBenchmark() {
-		// Not needed within this benchmark
+		for (int i=0; i<testSize; i++) {
+			long start = System.currentTimeMillis(); //storage variable for start time
+			int index = data.size(); 
+			String generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen); //generating a random string of a certain length
+			data.put(index, generatedValue); //placing generatedString in the list
+			long finish = System.currentTimeMillis(); //storage variable for end time
+			timeElapsed += (finish - start); //adding all the total times together by taking the start time away from the end time
+		}
 	}
 
 }

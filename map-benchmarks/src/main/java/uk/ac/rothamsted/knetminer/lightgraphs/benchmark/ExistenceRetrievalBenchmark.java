@@ -15,14 +15,6 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 	private long totalFetch;
 	private List<String> list;
 	
-	public void createData() {
-		for (int i=0; i<testSize; i++) {
-			int index = data.size();
-			String generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
-			data.put(index, generatedValue);
-		}		    
-	}
-	
 	@Override
 	public void runBenchmark() {
 		long start = 0;
@@ -48,9 +40,8 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
     		} else {
     			//
     		}	    
-    		
     		timeElapsed = (totalExistence + totalFetch);
-    		nTest += 1;
+    		nTest ++;
     	}		
 	}
 
