@@ -2,8 +2,6 @@ package uk.ac.rothamsted.knetminer.lightgraphs.benchmark;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import org.apache.commons.lang3.RandomStringUtils;
-
 import picocli.CommandLine.Command;
 
 @Command(name="retrieval")

@@ -1,4 +1,5 @@
 package uk.ac.rothamsted.knetminer.lightgraphs.benchmark;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;

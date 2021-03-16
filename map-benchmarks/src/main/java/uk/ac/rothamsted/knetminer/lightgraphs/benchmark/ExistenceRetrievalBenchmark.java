@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import org.apache.commons.lang3.RandomStringUtils;
-
 import picocli.CommandLine.Command;
 
 @Command(name="existence")
