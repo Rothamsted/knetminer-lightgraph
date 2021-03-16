@@ -34,7 +34,8 @@ public class DataModificationBenchmark extends Benchmark {
 		totalAdd = 0;
 		addCounter = 0;
 		
-		while (nTest != testCount) {
+		for ( int nTest = 0; nTest != testCount; nTest++ ) 
+		{
 			int operationID = ThreadLocalRandom.current().nextInt(0, 3);
 			if (operationID == 0) {
 				//delete		
@@ -44,7 +45,6 @@ public class DataModificationBenchmark extends Benchmark {
 				long finish = System.currentTimeMillis();
 				totalDelete += (finish - start);
 				deleteCounter ++;
-				nTest ++;
 			} else if (operationID == 1) {
 				//modify
 				int positionMod = ThreadLocalRandom.current().nextInt(0,(data.size()));
@@ -54,7 +54,6 @@ public class DataModificationBenchmark extends Benchmark {
 		    	long finish = System.currentTimeMillis();
 		    	totalModify += (finish - start);
 		    	modifyCounter ++;
-		    	nTest ++;
 			} else {
 				//add
 				generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
@@ -64,7 +63,6 @@ public class DataModificationBenchmark extends Benchmark {
 				long finish = System.currentTimeMillis();
 				totalAdd += (finish - start);
 				addCounter ++;
-				nTest ++;
 			}	    
 		}
 	}

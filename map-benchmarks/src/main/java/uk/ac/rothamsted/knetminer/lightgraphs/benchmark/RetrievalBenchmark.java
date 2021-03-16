@@ -17,13 +17,13 @@ public class RetrievalBenchmark extends Benchmark{
 		
 		System.out.println("--- Retrieval ---");
 		
-		while (nTest < testCount) {
+		for ( int nTest = 0; nTest != testCount; nTest++ ) 
+		{
 			int randomKey = ThreadLocalRandom.current().nextInt(0, data.size());
 			long start = System.currentTimeMillis();
 			String retrievedValue = data.get(randomKey);
 			long finish = System.currentTimeMillis();
 			timeElapsed += (finish - start);
-			nTest ++;
 		}
 	}
 }

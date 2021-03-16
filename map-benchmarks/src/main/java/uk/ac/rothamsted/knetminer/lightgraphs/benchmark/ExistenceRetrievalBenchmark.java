@@ -21,13 +21,14 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 		totalFetch = 0;
 		list = new ArrayList<String>();
 		
-		while (nTest != testCount) {
+		for ( int nTest = 0; nTest != testCount; nTest++ ) 
+		{
     		int randomNum = ThreadLocalRandom.current().nextInt(0, (data.size()*2) + 1);
     		
     		start = System.currentTimeMillis();
     		boolean doesExist = data.containsKey(randomNum);
     		finish = System.currentTimeMillis();
-			totalExistence += (finish - start);
+    		totalExistence += (finish - start);
     		
     		if (doesExist) {
     			start = System.currentTimeMillis();
@@ -39,7 +40,6 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
     			//
     		}	    
     		timeElapsed = (totalExistence + totalFetch);
-    		nTest ++;
     	}		
 	}
 
