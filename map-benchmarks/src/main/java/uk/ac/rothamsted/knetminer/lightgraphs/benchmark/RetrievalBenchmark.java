@@ -1,3 +1,4 @@
+package uk.ac.rothamsted.knetminer.lightgraphs.benchmark;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -13,7 +14,7 @@ public class RetrievalBenchmark extends Benchmark{
 		for (int i=0; i<testSize; i++) {
 			int index = data.size();
 			String generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen);
-			data.put(index, generatedValue);
+			data.put(index, generatedValue); //create this method in the superclass (Benchmark)
 		}		
 	}
 
