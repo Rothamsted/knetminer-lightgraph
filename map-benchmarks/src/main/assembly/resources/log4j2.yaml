@@ -1,0 +1,32 @@
+Configuration:
+  name: app
+  status: info
+  Properties:
+    Property:
+      name: pattern
+      value: "%d %p %C{1.} [%t] %m%n"
+  ThresholdFilter:
+    level: info
+  
+  Appenders:
+    Console:
+      name: STDOUT
+      PatternLayout:
+        Pattern: ${pattern}
+    RollingFile:
+      name: File
+      PatternLayout:
+        Pattern: ${pattern}
+      fileName: logs/cli-ref-project.log
+      filePattern: "logs/cli-ref-project_%d{yyyyMMdd}.log.gz"
+      TimeBasedTriggeringPolicy:
+        interval: 30 # It refers to the smallest unit in the date pattern, so it's days in this case
+      DefaultRollOverStrategy:
+        max: 30
+
+  Loggers:
+    Root:
+      level: info
+      AppenderRef:
+        - ref: STDOUT
+        - ref: File

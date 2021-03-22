@@ -6,7 +6,6 @@ import org.mapdb.DBMaker;
 import org.mapdb.HTreeMap;
 import org.mapdb.Serializer;
 
-import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 /**
