@@ -41,7 +41,7 @@ export CLASSPATH="$CLASSPATH:$mydir:$mydir/lib/*"
 # See here for an explanation about ${1+"$@"} :
 # http://stackoverflow.com/questions/743454/space-in-java-command-line-arguments 
 
-uk.ac.rothamsted.knetminer.lightgraphs.benchmark.BenchmarkRunner ${1+"$@"}
+java uk.ac.rothamsted.knetminer.lightgraphs.benchmark.BenchmarkRunner ${1+"$@"}
 
 ex_code=$? # let's exit with the exit code that comes from the JVM and the Java program
 
