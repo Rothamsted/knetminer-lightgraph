@@ -10,13 +10,17 @@ import picocli.CommandLine.Command;
  * interface.
  *
  */
-@Command ( 
+@Command (
+	name = "run.sh",
 	subcommands = { 
 		StringsPopulationBenchmark.class,
 		RetrievalBenchmark.class,
 		ExistenceRetrievalBenchmark.class,
 		DataModificationBenchmark.class
-	}
+	},
+  // These auto-add the -h and --help options, to get info on command usage
+	mixinStandardHelpOptions = true,
+	usageHelpAutoWidth = true
 )
 public class BenchmarkCLI implements Runnable
 {

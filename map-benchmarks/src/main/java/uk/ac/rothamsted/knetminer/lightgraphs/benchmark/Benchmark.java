@@ -6,6 +6,8 @@ import org.mapdb.DBMaker;
 import org.mapdb.HTreeMap;
 import org.mapdb.Serializer;
 
+import picocli.CommandLine.Command;
+import picocli.CommandLine.ExitCode;
 import picocli.CommandLine.Option;
 
 /**
@@ -18,6 +20,11 @@ import picocli.CommandLine.Option;
  * So, it's a form of inheritance, similar to the regular class inheritance.
  * 
  */
+@Command ( 
+  // These auto-add the -h and --help options, to get info on command usage
+	mixinStandardHelpOptions = true,
+	usageHelpAutoWidth = true
+)
 public abstract class Benchmark implements Runnable {
 	/**
 	 * this sets the package visibility, so that only BenchmarkRunner can invoke this top level class.
@@ -41,7 +48,7 @@ public abstract class Benchmark implements Runnable {
 	@Option(names={"-l", "--min-len"}, description="The minimum length of randomised strings")
 	protected int stringMinLen = 3;
 	
-	@Option(names={"-h", "--max-len"}, description="The maxium length of the randomised strings")
+	@Option(names={"-x", "--max-len"}, description="The maxium length of the randomised strings")
 	protected int stringMaxLen = 100;
 	
 	/**
@@ -68,7 +75,7 @@ public abstract class Benchmark implements Runnable {
 	public void init() {
 		//creates database file
 		DB db = DBMaker
-				.fileDB("target/file.db")
+				.fileDB("file.db")
 				.fileDeleteAfterClose()
 				.make();
 		//creates map within that database file
