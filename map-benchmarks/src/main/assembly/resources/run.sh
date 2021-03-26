@@ -43,7 +43,7 @@ export CLASSPATH="$CLASSPATH:$mydir:$mydir/lib/*"
 
 uk.ac.rothamsted.knetminer.lightgraphs.benchmark.BenchmarkRunner ${1+"$@"}
 
-ex_code=$?
+ex_code=$? # let's exit with the exit code that comes from the JVM and the Java program
 
 # We assume stdout is for actual output, that might be pipelined to some other command, the rest (including logging)
 # goes to stderr.
