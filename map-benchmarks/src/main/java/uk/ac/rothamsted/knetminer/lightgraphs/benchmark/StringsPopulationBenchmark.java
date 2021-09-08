@@ -17,15 +17,16 @@ public class StringsPopulationBenchmark extends Benchmark {
 	public void printReport() {
 		System.out.println("--- String Population ---");
 		System.out.println("Amount of values populated: " + data.size());
-		System.out.println("Took : " + timeElapsed + "ms");
+		System.out.print("Took : " + timeElapsed + "ms");
+		System.out.printf( "Average : %.2f ms/string\n", timeElapsed / data.size () );
 	}
 
 	@Override
 	public void runBenchmark() {
 		for (int i=0; i<testSize; i++) {
-			long start = System.currentTimeMillis(); //storage variable for start time
 			int index = data.size(); 
 			String generatedValue = RandomStringUtils.randomAlphanumeric(stringMinLen, stringMaxLen); //generating a random string of a certain length
+			long start = System.currentTimeMillis(); //storage variable for start time
 			data.put(index, generatedValue); //placing generatedString in the list
 			long finish = System.currentTimeMillis(); //storage variable for end time
 			timeElapsed += (finish - start); //adding all the total times together by taking the start time away from the end time
