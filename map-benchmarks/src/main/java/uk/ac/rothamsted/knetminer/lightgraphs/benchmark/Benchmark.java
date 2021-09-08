@@ -22,7 +22,8 @@ import picocli.CommandLine.Option;
 @Command ( 
   // These auto-add the -h and --help options, to get info on command usage
 	mixinStandardHelpOptions = true,
-	usageHelpAutoWidth = true
+	usageHelpAutoWidth = true,
+	showDefaultValues = true
 )
 public abstract class Benchmark implements Runnable {
 	/**
