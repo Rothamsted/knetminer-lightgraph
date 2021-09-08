@@ -1,7 +1,5 @@
 package uk.ac.rothamsted.knetminer.lightgraphs.benchmark;
   
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import picocli.CommandLine.Command;
@@ -11,7 +9,9 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 
 	private long totalExistence;
 	private long totalFetch;
-	private List<String> list;
+	private int fetchedCount;
+	private long totalStrLen = 0;
+	
 	
 	@Override
 	public void runBenchmark() {
@@ -19,7 +19,7 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
 		long finish = 0;
 		totalExistence = 0;
 		totalFetch = 0;
-		list = new ArrayList<String>();
+		totalStrLen = 0;
 		
 		for ( int nTest = 0; nTest != testCount; nTest++ ) 
 		{
@@ -32,23 +32,27 @@ public class ExistenceRetrievalBenchmark extends Benchmark{
     		
     		if (doesExist) {
     			start = System.currentTimeMillis();
-    			String consumedValue = data.get(randomNum);
+    			String consumedValue = data.get ( randomNum );
     			finish = System.currentTimeMillis();
     			totalFetch += (finish - start);
-    			list.add(consumedValue);
-    		} else {
-    			//
-    		}	    
+    			fetchedCount++;
+    			totalStrLen += consumedValue.length ();
+    		}     
     		timeElapsed = (totalExistence + totalFetch);
     	}		
 	}
 
 	public void printReport() {
 		System.out.println("--- Existence & Retrieval ---"); 
-		System.out.println("Fetched Values: " + list.size() + "/" + testCount);
-	    System.out.println("Existence Total Time: " + totalExistence + "ms");
+		System.out.println("Fetched Values: " + fetchedCount + "/" + testCount);
+	  System.out.println("Existence Total Time: " + totalExistence + "ms");
+	  System.out.printf ("Existence Average Time: %.2f ms/key", 1d * totalExistence / testCount );
+	  
 		System.out.println("Fetch Total Time: " + totalFetch + "ms");
-		System.out.println("Total time: " + timeElapsed + "ms");		
+	  System.out.printf ("Fetch Average Time: %.2f ms/key", 1d * totalFetch / fetchedCount );
+
+	  System.out.println("Total time: " + timeElapsed + "ms");		
+	  System.out.println("Total string length: " + totalStrLen );		
 	}
 
 }
