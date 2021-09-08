@@ -18,7 +18,7 @@ public class StringsPopulationBenchmark extends Benchmark {
 		System.out.println("--- String Population ---");
 		System.out.println("Amount of values populated: " + data.size());
 		System.out.print("Took : " + timeElapsed + "ms");
-		System.out.printf( "Average : %.2f ms/string\n", timeElapsed / data.size () );
+		System.out.printf( "Average : %.2f ms/string\n", 1d * timeElapsed / data.size () );
 	}
 
 	@Override
