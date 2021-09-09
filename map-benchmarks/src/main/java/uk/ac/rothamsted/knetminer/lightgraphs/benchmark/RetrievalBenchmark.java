@@ -12,7 +12,7 @@ public class RetrievalBenchmark extends Benchmark{
 	public void printReport() {
 		System.out.println("Times Retrieved: " + testCount);
 		System.out.println("Took : " + timeElapsed + "ms");
-		System.out.printf ( "Average: %.5f ms/string\n", 1d * timeElapsed / data.size () );
+		System.out.printf ( "Average: %.5f ms/string\n", 1d * timeElapsed / testCount );
 		System.out.printf ( "Total value lenght: %d\n", valuesLens );
 	}
 
